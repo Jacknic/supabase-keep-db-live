@@ -54,7 +54,7 @@
         // Ping by making an actual network request to verify connectivity
         // We'll use a simple REST API call to check if the server is reachable
         const startTime = Date.now();
-        const response = await fetch(`${config.url}/rest/v1/`, {
+        const response = await fetch(`${config.url}/rest/v1/ping?select=*&limit=1`, {
           headers: {
             'apikey': config.key,
             'Authorization': `Bearer ${config.key}`
@@ -66,7 +66,7 @@
         if (!response.ok && response.status !== 404 && response.status !== 401) {
           throw new Error(`Server returned status ${response.status}`);
         }
-        
+        console.log(await response.text());
         console.log('Success! Response time:', duration + 'ms');
         successCount++;
         
